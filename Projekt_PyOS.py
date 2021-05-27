@@ -1,8 +1,10 @@
+from random import choices
 import time
 import json
 import os
 from art import *
 
+#This is a function
 def changeUsernameAndPassword():
     Userlogin = {"username": "admin", "password": "admin"}
     Userlogin["username"] = input("This will be your new Username!:  ")
@@ -18,6 +20,7 @@ def Login():
     f = open('userlogin.json')
     Userlogin = json.load(f)
     while True:
+            clear()
             tprint("PyOS")
             usernameTry = input("Enter your Username:  ")
             passwordTry = input("Enter your Password:  ")
@@ -28,33 +31,48 @@ def Login():
                 print("Wrong Username and/or Password . . .\nTry again!")
                 time.sleep(2)
         
+def printNonNoneChoice(chnr):
+    chnr = "ch"+chnr
+    if chnr != None:
+        print(str(chnr)+". " + str((chnr)))
 
+def menu():
+    while True: 
+        clear()
+        tprint("PyOS")
+        count = 1
+        for functions in listofoptions:
+           print(str(count)+". "+functions.__name__)
+           count = count+1
+        ans = input("\nWhat would you like to do? ")
+        try:
+            ans = int(ans)
+            ans = ans-1
+            listofoptions[ans]()
+        except ValueError:
+            print("Not a valid option, try again")
+            time.sleep(2)
+            clear()
+            continue
+        except IndexError:
+            
+            print("Not a valid option, try again")
+            time.sleep(2)
+            clear()
+            continue
+
+def Calculator():
+    clear()
+    print("Calculator")
+    input("waiting")
 
 if __name__ == "__main__":
     clear()
     tprint("PyOS")
     time.sleep(3)
     if os.path.exists("userlogin.json") == False:
-        changeUsernameAndPassword()
-        
+        changeUsernameAndPassword()       
     Login()
 
-    ans=True
-    while ans: 
-        print ("""
-        1.Add a Student
-        2.Delete a Student
-        3.Look Up Student Record
-        4.Exit/Quit
-        """)
-        ans=input("What would you like to do? ") 
-        if ans=="1": 
-            print("\n Student Added") 
-        elif ans=="2":
-            print("\n Student Deleted") 
-        elif ans=="3":
-            print("\n Student Record Found") 
-        elif ans=="4":
-            print("\n Goodbye") 
-        elif ans !="":
-            print("\n Not Valid Choice Try again")
+    listofoptions = [Calculator,Login,changeUsernameAndPassword]
+    menu()
