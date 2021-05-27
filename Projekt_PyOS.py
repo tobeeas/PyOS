@@ -1,4 +1,4 @@
-from random import choices
+
 import time
 import json
 import os
@@ -55,7 +55,6 @@ def menu():
             clear()
             continue
         except IndexError:
-            
             print("Not a valid option, try again")
             time.sleep(2)
             clear()
@@ -66,6 +65,20 @@ def Calculator():
     print("Calculator")
     input("waiting")
 
+def Settings():
+    global listofoptions
+    listofoptions = [Login,changeUsernameAndPassword,MainMenu]
+    menu()
+
+def ShutDown():
+    quit()
+
+def MainMenu():
+    global listofoptions
+    mainMenuList = [Calculator,Settings]
+    listofoptions = mainMenuList
+    
+
 if __name__ == "__main__":
     clear()
     tprint("PyOS")
@@ -73,6 +86,6 @@ if __name__ == "__main__":
     if os.path.exists("userlogin.json") == False:
         changeUsernameAndPassword()       
     Login()
-
-    listofoptions = [Calculator,Login,changeUsernameAndPassword]
+    mainMenuList = [Calculator,Settings]
+    listofoptions = mainMenuList
     menu()
